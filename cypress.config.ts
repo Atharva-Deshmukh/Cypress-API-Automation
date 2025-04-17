@@ -3,6 +3,8 @@ import { defineConfig } from "cypress";
 export default defineConfig({
   e2e: {
 
+    baseUrl: 'https://reqres.in',
+
     specPattern: "cypress/e2e/**/*.cy.{js,jsx,ts,tsx}",
     chromeWebSecurity: false,
     scrollBehavior: false,  // to prevent cypress' default behaviour to scroll elements into focus
@@ -27,4 +29,8 @@ export default defineConfig({
       
     },
   },
+
+  env: {
+    baseUrl: 'https://reqres.in',
+  }
 });
