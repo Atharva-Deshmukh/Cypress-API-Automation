@@ -1,0 +1,12 @@
+{
+  "name": "Cypress-Api-Automation",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:Atharva-Deshmukh/Cypress-API-Automation.git",
+  "author": "Atharva Deshmukh <atharvadeshmukh2103@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "cypress": "^14.3.0",
+    "typescript": "^5.8.3"
+  }
+}
