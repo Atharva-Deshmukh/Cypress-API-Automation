@@ -1,0 +1,7 @@
+
+
+Even if baseUrl is under e2e, if you're using Cypress.env('baseUrl'), 
+it also needs to be under the env object so that Cypress.env('baseUrl') works
+
+ELSE,
+we can use Cypress.config('baseUrl')
