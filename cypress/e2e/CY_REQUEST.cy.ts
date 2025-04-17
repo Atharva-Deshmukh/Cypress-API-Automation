@@ -30,15 +30,16 @@ cy.request('https://www.google.com/webhp?#q=cypress.io+cors')
 
                                                         IMP PART:
                                                         ---------
-                                                        
+
 If you do not provide a fully qualified domain name (FQDN) URL, 
-Cypress will make its best guess as to which host you want cy.request() to use in the URL.
+Cypress will try to guess the host
 
 If you make a cy.request() after visiting a page, 
 Cypress assumes the URL used for the cy.visit() is the host.
+If Cypress cannot determine the host it will throw an error.
 
 cy.visit('http://localhost:8080/app')
-cy.request('users/1.json') //  URL is  http://localhost:8080/users/1.json
+cy.request('users/1.json') //  URL is  http://localhost:8080/users/1.json , guessed from above cy.visit()
 
 If you make a cy.request() prior to visiting a page, Cypress assumes the host is the 
 baseUrl property configured inside of of your configuration file.
@@ -54,18 +55,27 @@ export default defineConfig({
 
 cy.request('seed/admin') // URL is http://localhost:1234/seed/admin
 
-If Cypress cannot determine the host it will throw an error.
+
+                                                      Alias:
+                                                      -----
+
+cy.request('https://jsonplaceholder.cypress.io/comments').as('comments')
+
+cy.get('@comments').should((response) => {
+  expect(response.body).to.have.length(500)
+  expect(response).to.have.property('headers')
+  expect(response).to.have.property('duration')
+})
 
 
-Yields 
+                                                      Yields:
+                                                      ------ 
 cy.request() yields the response as an object literal containing properties such as:
 
 status
 body
 headers
-duration
-
-*/
+duration */
 
 it('Checking response object', () => {
     cy.request('https://reqres.in/api/users').then((respObj) => {
@@ -75,7 +85,7 @@ it('Checking response object', () => {
       
       {
         body: {
-        data = [],
+          data = [],
         },
         duration: 80,
         headers: {},
@@ -87,25 +97,24 @@ it('Checking response object', () => {
     });
 });
 
-/* Sometimes it's quicker to test the contents of a page rather than cy.visit() and wait for the 
-entire page and all of its resources to load.
+/*                                              Advantage of cy.request() 
+                                                ------------------------
+
+when we use cy.visit(), we wait for the page to fully load in the UI, but if we just need to check the status
+codes, we should not fully load the resources, we can just quickly test using cy.request()
 
 cy.request('/admin').its('body').should('include', '<h1>Admin</h1>')
 
 
-Alias the request using .as()
-cy.request('https://jsonplaceholder.cypress.io/comments').as('comments')
+                                                      Auto redirect
+                                                      -------------
 
-cy.get('@comments').should((response) => {
-  expect(response.body).to.have.length(500)
-  expect(response).to.have.property('headers')
-  expect(response).to.have.property('duration')
-})
+Request a page while disabling auto redirect. Its part of options in cy.request()
+To test the redirection behavior of a login without a session, cy.request can be 
+used to check the status and redirectedToUrl property.
 
-Request a page while disabling auto redirect
-To test the redirection behavior of a login without a session, cy.request can be used to check the status and redirectedToUrl property.
-
-The redirectedToUrl property is a special Cypress property that normalizes the URL the browser would normally follow during a redirect.
+The redirectedToUrl property is a special Cypress property that normalizes 
+the URL the browser would normally follow during a redirect.
 
 cy.request({
   url: '/dashboard',
@@ -113,11 +122,14 @@ cy.request({
 }).then((resp) => {
   // redirect status code is 302
   expect(resp.status).to.eq(302)
-  expect(resp.redirectedToUrl).to.eq('http://localhost:8082/unauthorized')
+  expect(resp.redirectedToUrl).to.eq('http://localhost:8082/unauthorized') --> VALIDATE redirects
 })
 
-Download a PDF file
-By passing the encoding: binary option, the response.body will be serialized binary content of the file. You can use this to access various file types via .request() like .pdf, .zip, or .doc files.
+                                                  Download a PDF file:
+                                                  -------------------
+
+By passing the encoding: binary option, the response.body will be serialized binary content of the file. 
+You can use this to access various file types via .request() like .pdf, .zip, or .doc files.
 
 cy.request({
   url: 'http://localhost:8080/some-document.pdf',
@@ -126,8 +138,11 @@ cy.request({
   cy.writeFile('path/to/save/document.pdf', response.body, 'binary')
 })
 
-Get Data URL of an image
-By passing the encoding: base64 option, the response.body will be base64-encoded content of the image. You can use this to construct a Data URI for use elsewhere.
+                                                Get Data URL of an image
+                                                ------------------------
+
+By passing the encoding: base64 option, the response.body will be base64-encoded content of the image. 
+You can use this to construct a Data URI for use elsewhere.
 
 cy.request({
   url: 'https://docs.cypress.io/img/logo.png',
@@ -140,10 +155,14 @@ cy.request({
 })
 
 
-HTML form submissions using form option
-Oftentimes, once you have a proper e2e test around logging in, there's no reason to continue to cy.visit() the login and wait for the entire page to load all associated resources before running any other commands. Doing so can slow down our entire test suite.
+                                  HTML form submissions using form option
+                                  --------------------------------------
 
-Using cy.request(), we can bypass all of this because it automatically gets and sets cookies as if the requests had come from the browser.
+There's no reason to continue to cy.visit() the login and wait for the entire page to load all 
+associated resources before running any other commands. Doing so can slow down our entire test suite.
+
+Using cy.request(), we can bypass all of this because it automatically gets and sets cookies as if 
+the requests had come from the browser.
 
 cy.request({
   method: 'POST',
