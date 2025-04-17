@@ -19,13 +19,33 @@ function getAll(accessToken: string, filterName: string) {
 
 // base url is set already
 export function getAllUsers() {
-    cy.log('BASE URL -> ', Cypress.env('baseUrl'))
     return cy.request({
         method: 'GET',
-        url: `${Cypress.env('baseUrl')}/api/users`,
+        url: `${Cypress.env('baseUrl')}/users`,
         failOnStatusCode: false,
         headers: {
             select: '{"Name", "Id"}',
         }
+    });
+}
+
+export function getUsersById(id: string) {
+    return cy.request({
+        method: 'GET',
+        url: `${Cypress.env('baseUrl')}/users/${id}`,
+        failOnStatusCode: false,
+        headers: {
+            select: '{"Name", "Id"}',
+        }
+    });
+}
+
+export function createUser(payload: any) {
+    return cy.request({
+        method: 'POST',
+        url: `${Cypress.env('baseUrl')}/users`,
+        failOnStatusCode: false,
+        retryOnNetworkFailure: true,
+        body: payload
     });
 }
