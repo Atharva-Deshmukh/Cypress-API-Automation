@@ -3,7 +3,7 @@ import { defineConfig } from "cypress";
 export default defineConfig({
   e2e: {
 
-    baseUrl: 'https://reqres.in',
+    baseUrl: 'https://reqres.in/api',
 
     specPattern: "cypress/e2e/**/*.cy.{js,jsx,ts,tsx}",
     chromeWebSecurity: false,
@@ -31,6 +31,6 @@ export default defineConfig({
   },
 
   env: {
-    baseUrl: 'https://reqres.in',
+    baseUrl: 'https://reqres.in/api',
   }
 });
