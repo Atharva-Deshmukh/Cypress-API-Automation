@@ -8,3 +8,7 @@ we can use Cypress.config('baseUrl')
 
 RANDOM EMAIL ID FOR TESTDATA:
 Math.random().toString(5).substring(2) + '@gmail.com'
+
+------------------------------------------------
+
+we use qs: {name: 'AD'} for query params
