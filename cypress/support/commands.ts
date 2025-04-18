@@ -8,30 +8,35 @@
 // commands please read more here:
 // https://on.cypress.io/custom-commands
 // ***********************************************
-//
-//
+
 // -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
-//
-//
+Cypress.Commands.add('login', (email, password) => { })
+
 // -- This is a child command --
-// Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
+Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { })
+
 // -- This is a dual command --
-// Cypress.Commands.add('dismiss', { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
+Cypress.Commands.add('dismiss', { prevSubject: 'optional'}, (subject, options) => { })
+
 // -- This will overwrite an existing command --
-// Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
-//
-// declare global {
-//   namespace Cypress {
-//     interface Chainable {
-//       login(email: string, password: string): Chainable<void>
-//       drag(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
-//       dismiss(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
-//       visit(originalFn: CommandOriginalFn, url: string, options: Partial<VisitOptions>): Chainable<Element>
-//     }
-//   }
-// }
+Cypress.Commands.overwrite('visit', (originalFn, url, options) => { })
+
+/* --------------------My own custom commands---------------------------- */
+
+import { getAccessToken } from "./api_token_helper"
+
+Cypress.Commands.add('getAccessToken', () => {
+    return getAccessToken(); // <--- important: return the actual function call
+});
+
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      login(email: string, password: string): Chainable<void>
+      drag(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
+      dismiss(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
+      visit(originalFn: CommandOriginalFn, url: string, options: Partial<VisitOptions>): Chainable<Element>
+      getAccessToken(): Chainable<string>;
+    }
+  }
+}

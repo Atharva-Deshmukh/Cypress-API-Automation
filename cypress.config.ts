@@ -6,7 +6,7 @@ export default defineConfig({
     baseUrl: 'https://reqres.in/api',
 
     specPattern: "cypress/e2e/**/*.cy.{js,jsx,ts,tsx}",
-    chromeWebSecurity: false,
+    chromeWebSecurity: false, // for iframes and for cookies fetching
     scrollBehavior: false,  // to prevent cypress' default behaviour to scroll elements into focus
 
     /* numTestsKeptInMemory: 50 (default), --> making it 0 disables timetravel
@@ -32,5 +32,6 @@ export default defineConfig({
 
   env: {
     baseUrl: 'https://reqres.in/api',
+    tokenBaseUrl: 'https://simple-books-api.glitch.me/'
   }
 });

@@ -12,3 +12,21 @@ Math.random().toString(5).substring(2) + '@gmail.com'
 ------------------------------------------------
 
 we use qs: {name: 'AD'} for query params
+
+--------------------------------------------------
+
+Adding already existing function to cypress commands:
+
+import { getAccessToken } from "./api_token_helper"
+
+Cypress.Commands.add('getAccessToken', () => {
+    return getAccessToken(); // <--- important: return the actual function call
+});
+
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      getAccessToken(): Chainable<string>;
+    }
+  }
+}
