@@ -18,7 +18,7 @@ describe('API CRUD WORKFLOW', () => {
             
             //  create a new user and get it
             let createdRespId: string;
-            apiHelpers.createUser(TESTDATA.payload).then((createResp) => {
+            apiHelpers.createUser(TESTDATA.createPayload).then((createResp) => {
                 expect(createResp.status).to.eq(201);
                 createdRespId = createResp.body.id; // store the created id
                 
@@ -30,6 +30,12 @@ describe('API CRUD WORKFLOW', () => {
                 //     expect(createdRespVerification.body.name).to.equal(TESTDATA.payload.name);
                 //     expect(createdRespVerification.body.job).to.equal(TESTDATA.payload.job);
                 // })
+
+                apiHelpers.updateUser(TESTDATA.updatePayload, TESTDATA.id).then((updateResp) => {
+                    expect(updateResp.status).to.eq(200);
+                    expect(updateResp.body.name).to.eq(TESTDATA.updatePayload.name);
+                    expect(updateResp.body.job).to.eq(TESTDATA.updatePayload.job);
+                })
             });
         });
 

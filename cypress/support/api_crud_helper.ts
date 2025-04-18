@@ -40,12 +40,25 @@ export function getUsersById(id: string) {
     });
 }
 
-export function createUser(payload: any) {
+export function createUser(createPayload: any) {
     return cy.request({
         method: 'POST',
         url: `${Cypress.env('baseUrl')}/users`,
         failOnStatusCode: false,
         retryOnNetworkFailure: true,
-        body: payload
+        body: createPayload
+    });
+}
+
+export function updateUser(updatePayload: any, id: string) {
+    return cy.request({
+        method: 'PUT',
+        url: `${Cypress.env('baseUrl')}/users/${id}`,
+        headers: {
+            select: '{"name", "job"}',
+        },
+        failOnStatusCode: false,
+        retryOnNetworkFailure: true,
+        body: updatePayload
     });
 }
