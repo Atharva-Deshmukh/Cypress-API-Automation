@@ -33,13 +33,15 @@ pm.test('Response object has "authenticated" = true', () => {
   }
 */
 
+import { BASIC_AUTH_TESTDATA } from "../testdata/api_basic_auth_testdata";
+
 it('Basic Auth in Cypress', () => {
     cy.request({
         method: 'GET',
         url: 'https://postman-echo.com/basic-auth',
         auth: {
-            user: 'postman',
-            pass: 'password',
+            user: BASIC_AUTH_TESTDATA.USERNAME,
+            pass: BASIC_AUTH_TESTDATA.PASSWORD,
             sendImmediately: true
         },
         retryOnNetworkFailure: true,
