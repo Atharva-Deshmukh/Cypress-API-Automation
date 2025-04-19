@@ -19,7 +19,7 @@ export function getAllBooks(accessToken: string) {
         method: 'GET',
         url: `${Cypress.env('tokenBaseUrl')}/books`,
         headers: {
-            Authorization: accessToken,
+            Authorization: 'Bearer ' + accessToken,
         },
     });
 }

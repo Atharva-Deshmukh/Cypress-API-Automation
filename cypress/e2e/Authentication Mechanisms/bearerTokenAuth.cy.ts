@@ -1,5 +1,5 @@
-import * as tokenHelpers from '../support/api_token_helper';
-import { AUTH_TESTDATA } from '../testdata/api_auth_testdata';
+import * as tokenHelpers from '../../support/api_bearer_token_helper';
+import { AUTH_TESTDATA } from '../../testdata/api_bearer_token_auth_testdata';
 
 describe('Simple token workflow', () => {
 

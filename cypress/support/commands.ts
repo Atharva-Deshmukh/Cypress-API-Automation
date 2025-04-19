@@ -23,7 +23,7 @@ Cypress.Commands.overwrite('visit', (originalFn, url, options) => { })
 
 /* --------------------My own custom commands---------------------------- */
 
-import { getAccessToken } from "./api_token_helper"
+import { getAccessToken } from "./api_bearer_token_helper"
 
 Cypress.Commands.add('getAccessToken', () => {
     return getAccessToken(); // <--- important: return the actual function call
