@@ -33,7 +33,7 @@ pm.test('Response object has "authenticated" = true', () => {
   }
 */
 
-import { BASIC_AUTH_TESTDATA } from "../testdata/api_basic_auth_testdata";
+import { BASIC_AUTH_TESTDATA } from "../../testdata/api_basic_auth_testdata";
 
 it('Basic Auth in Cypress', () => {
     cy.request({
