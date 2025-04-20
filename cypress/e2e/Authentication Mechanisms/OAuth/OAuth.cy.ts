@@ -38,7 +38,7 @@ this gives us the client id and client secret
 
 
     After hitting, format of response:
-    access_token=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&scope=&token_type=bearer
+    access_token=<oauthTokenHere>&scope=&token_type=bearer
 
 This was the OAuth token, we will use this OAuth token to get response from the server
 On server side, server to verifies from the Auth server if this OAuth token is valid, and responds only then
